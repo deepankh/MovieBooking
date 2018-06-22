@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Ticket Booking</title>
+  <link rel="stylesheet" href="stylesheets/style.css">
+  <script type="text/javascript" src="/static/jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="/static/main.js"></script>
+</head>
+
+<body>
+  <div align=center>
+    <h1>
+      <strong style="color: white">Ticket Booking</strong>
+    </h1>
+    <hr>
+  </div>
+
+  <div id="loginform" class="row">
+
+    <div class="col col-md">
+
+      <form method="post" action="SummaryPage" name="myForm">
+        <div id="movie-selector" class="row">
+          <div class=" col col-sm">
+            <p>Movie Name : </p>
+          </div>
+          <div class="col col-sm">
+            <select id="movie-id" class="option-box" name="movie-id" onchange="diplayImage()" required>
+              <option value="" selected disabled hidden>Choose here</option>
+              {%for i,j in shows.items %}
+              <option value="{{i}}">{{i}}</option>
+              {%endfor%}
+            </select>
+          </div>
+        </div>
+        <div class="row">
+
+          <div class="col col-sm">
+            <p>Timing : </p>
+          </div>
+          <div class="col col-sm">
+            <select id="timing-id" class="option-box" name="timing-id" required onchange="populate()">
+              <option value="" selected disabled hidden>Choose here</option>
+              <option value="evening">Evening</option>
+              <option value="night">Night</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+
+          <div class="col col-sm">
+            <p>Number Of Tickets : </p>
+          </div>
+          <div class="col col-sm">
+            <select id="number-id" class="option-box" name="number-id" required>
+              <option value="" selected disabled hidden>Choose here</option>
+
+            </select>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col col-sm">
+
+          </div>
+          <div class="col col-sm">
+            <button type="submit" name="submit" value="submit" class="buttonclass" id='submit'>
+              Submit
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col col-sm " id='movieImage' style="float: right;">
+      <img src="" alt="" id='imageToBeDisplayed' width="500" height="600">
+    </div>
+  </div>
+
+</body>
+<!-- <script type="text/javascript">
+
+
+
+  function populate() {
+    var movie = document.getElementById('movie-id').value;
+    var selected_timing = document.getElementById('timing-id').value;
+    var tickets = document.getElementById('number-id');
+    var show_details = '{{shows}}';
+    var temp = show_details.replace(/&#39;/g, "\"");
+    var obj = JSON.parse(temp);
+    var available = obj[movie.toString()];
+    tickets.innerHTML = '';
+    if (selected_timing == "evening") {
+      var n = 0;
+    }
+    else if (selected_timing == "night") {
+      var n = 1;
+    }
+    if (available[n] >= 10) {
+      var value = 10;
+    }
+    else {
+      var value = available[n];
+    }
+    for (var opt = 1; opt <= value; opt++) {
+      var pair = [opt, opt];
+      var newOption = document.createElement("option");
+      newOption.value = pair[0];
+      newOption.innerHTML = pair[1];
+      tickets.options.add(newOption);
+    }
+  }
+
+
+
+
+
+
+
+  function diplayImage() {
+
+    var movie_id = document.getElementById('movie-id').value;
+    document.getElementById('imageToBeDisplayed').src = "/stylesheets/" + movie_id + ".jpg";
+
+  }
+</script> -->
+
+</html>

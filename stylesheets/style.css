@@ -1,0 +1,88 @@
+
+  body  {
+            background-image: url("../stylesheets/movies.jpg");
+            background-color: #cccccc;
+            
+            /* height: auto;
+            width: auto; */
+            /* color: white; */
+            background-size: cover;
+
+        }
+  #myDIV {
+          width: 100%;
+        /* padding: 50px 0; */
+
+          margin-left: 10px;
+          margin-top: 150px;
+        }
+  .first {
+          text-align: center;
+          color: #fff;
+         }
+  #loginform {
+      font-size: 19px;
+      color: yellow;
+  }
+  
+  .textbox {
+          height:20px;
+          font-size:14pt;
+      }
+  .buttonclass {
+         font-family: Arial,Helvetica,sans-serif;
+         font-size: 16px;
+         /*height: 30px; */
+         border-radius: 5px;
+         border-width: thin;
+      }
+  .buttonclass:hover {
+      color: #ae1208;
+      background:#444;
+      transition: 0.5s all;
+      cursor: pointer;
+      border-width: 0;
+    }
+  .option-box{
+        height: 20px;
+        font-size: 12pt;
+  }
+
+  .row {
+      width: 60%;
+      max-width: 960px;
+      margin: 0 auto;
+  }
+
+  .row::after {
+      clear: both;
+      content: "";
+      display: table;
+  }
+
+  .col {
+      float: left;
+  }
+
+  .col-sm {
+      width: 33.33%;
+      margin: 1% 0 1% 0;
+      padding: 7px;
+      text-align: left;
+  }
+
+  .col-md {
+    width:62%;
+    margin: 1% 0 1% 0;
+    padding: 7px;
+    text-align: left;
+}
+
+  .row p {
+      margin: 0;
+  }
+  #submitForm {
+    margin-left: 580px;
+    margin-top: 200px;
+
+}
