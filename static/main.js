@@ -40,15 +40,11 @@ console.log("loaded Java Script!");
 
 //function to populate the number of tickets  option
 function populate(shows) {
-//select the show details
   var movie = document.getElementById('movie-id').value;
   var selected_timing = document.getElementById('timing-id').value;
   var tickets = document.getElementById('number-id');
-//  get the show details from the server
-  var obj = shows;
-  var available = obj[movie];
-  console.log(available[0], typeof available[0]);
-//  check for the timing and the available tickets
+  var obj = JSON.parse(shows);
+  var available = obj[movie.toString()];
   tickets.innerHTML = '';
   if (selected_timing == "evening") {
     var n = 0;
@@ -56,14 +52,12 @@ function populate(shows) {
   else if (selected_timing == "night") {
     var n = 1;
   }
-
   if (available[n] >= 10) {
     var value = 10;
   }
   else {
     var value = available[n];
   }
-//  populate the select tag on number-id
   for (var opt = 1; opt <= value; opt++) {
     var pair = [opt, opt];
     var newOption = document.createElement("option");
@@ -85,13 +79,25 @@ function diplayImage() {
 //AJAX call for populate function
 function handleChange(e) {
 //to tell the js that it is a ajax call
-  $.ajax('/', {
-    type: 'GET',
-    data: {
-      format: 'json'
-    },
-    success: populate
-  });
+var xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4) {   // XMLHttpRequest.DONE == 4
+           if (this.status == 200) {
+             console.log("test successful ");
+                populate(this.responseText);
+           }
+           else if (this.status == 400) {
+              alert('There was an error 400');
+           }
+           else {
+               alert('something else other than 200 was returned');
+           }
+        }
+    };
+
+    xmlhttp.open("get", "/test", true);
+    xmlhttp.send();
 }
 //function to detect changes in the system
 $(document).ready(function () {

@@ -62,9 +62,16 @@ class Login(webapp2.RequestHandler):
         path = os.path.join(os.path.dirname(__file__), 'SummaryPage.html')
         self.response.out.write(template.render(path, Logon))
 
+class test(webapp2.RequestHandler):
+    def get(self):
+        self.response.out.headers['content-type']='text/json'
+        self.response.out.write(json.dumps(shows))
+    
 
-application = webapp2.WSGIApplication([('/', MainPage), ('/SummaryPage',
-                                                         Login)], debug=True)  # ('/UserPage/',Validation)
+application = webapp2.WSGIApplication([('/', MainPage), 
+                                        ('/SummaryPage',Login),
+                                        ('/test',test)], 
+                                        debug=True)  # ('/UserPage/',Validation)
 
 
 def main():
