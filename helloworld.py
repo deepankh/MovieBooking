@@ -14,7 +14,7 @@ from google.appengine.api import users
 
 import ticketbookingsystem as tbs
 
-# user = {'a@b.com': 'pass', 'ddj@b.com': 'pass'}
+user = {'a@b.com': 'pass', 'ddj@b.com': 'pass'}
 
 shows = {'102 Not Out!': [10, 60],
          'Hellsing': [60, 6],
@@ -66,6 +66,7 @@ class test(webapp2.RequestHandler):
     def get(self):
         self.response.out.headers['content-type']='text/json'
         self.response.out.write(json.dumps(shows))
+
     
 
 application = webapp2.WSGIApplication([('/', MainPage), 
