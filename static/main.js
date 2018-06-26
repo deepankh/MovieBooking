@@ -1,43 +1,5 @@
 console.log("loaded Java Script!");
 
-// commented section
-// function selected(shows) {
-//     var movie = document.getElementById('movie-id').value;
-//     var selected_tickets = document.getElementById('number-id').value;
-//     var selected_timing = document.getElementById('timing-id').value;
-//     var obj = shows;
-//     // alert(show_details);
-//     console.log(show_details);
-//     alert(shows);
-//     // var temp = show_details.replace(/&#39;/g, "\"");
-//     var available = obj[movie];
-//     alert(available);
-//     if (selected_timing == 'evening') {
-//         if (available[0] >= selected_tickets) {
-//             // console.log(available[0]);
-//             return true;
-//         }
-//         else {
-//             alert("not enough tickets for evening show the number available are : " + available[0]);
-//             // console.log(available[0]);
-//            return false;
-//         }
-//     }
-//     else {
-//         if (available[1] >= selected_tickets) {
-//             // console.log(available[1]);
-//             return true;
-//         }
-//         else {
-//             alert("not enough tickets for night show the number available are : " + available[1]);
-//             // console.log(available[1]);
-//            return false;
-//         }
-
-//     }
-// }
-
-
 //function to populate the number of tickets  option
 function populate(shows) {
   var movie = document.getElementById('movie-id').value;
@@ -78,29 +40,69 @@ function diplayImage() {
 
 //AJAX call for populate function
 function handleChange(e) {
-//to tell the js that it is a ajax call
-var xmlhttp = new XMLHttpRequest();
+  //to tell the js that it is a ajax call
+  var xmlhttp = new XMLHttpRequest();
 
-    xmlhttp.onreadystatechange = function() {
-        if (this.readyState == 4) {   // XMLHttpRequest.DONE == 4
-           if (this.status == 200) {
-             console.log("test successful ");
-                populate(this.responseText);
-           }
-           else if (this.status == 400) {
-              alert('There was an error 400');
-           }
-           else {
-               alert('something else other than 200 was returned');
-           }
-        }
-    };
+  xmlhttp.onreadystatechange = function () {
+    if (this.readyState == 4) {   // XMLHttpRequest.DONE == 4
+      if (this.status == 200) {
+        console.log("test successful ");
+        populate(this.responseText);
+      }
+      else if (this.status == 400) {
+        alert('There was an error 400');
+      }
+      else {
+        alert('something else other than 200 was returned');
+      }
+    }
+  };
 
-    xmlhttp.open("get", "/test", true);
-    xmlhttp.send();
+  xmlhttp.open("get", "/ticketBooking", true);
+  xmlhttp.send();
 }
 //function to detect changes in the system
 $(document).ready(function () {
   $('#timing-id').on('change', handleChange);
 
 });
+
+function prevent() {
+  document.getElementById("TicketBookingForm").addEventListener("click", function (event)
+ {
+    event.preventDefault();
+  });
+}
+
+var submitBtn = document.getElementById("submitBtn");
+submitBtn.addEventListener('click',booktickets);
+
+function booktickets(){
+  var movieid = document.getElementById('movie-id').value;
+  var timingid = document.getElementById('timing-id').value;
+  var numberid = document.getElementById('number-id').value;
+  data={
+    "movieid":movieid,
+    "timingid":timingid,
+    "numberid":numberid
+  }
+  var xmlhttp = new XMLHttpRequest();
+
+  xmlhttp.onreadystatechange = function () {
+    if (this.readyState == 4) {   // XMLHttpRequest.DONE == 4
+      if (this.status == 200) {
+        console.log(this.responseText);
+
+      }
+      else if (this.status == 404) {
+        alert('There was an error 404');
+      }
+      else {
+        alert('something else other than 200 was returned');
+      }
+    }
+  };
+
+  xmlhttp.open("post", "/test/SummaryPage", true);
+  xmlhttp.send(data);
+}

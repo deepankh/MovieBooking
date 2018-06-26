@@ -44,10 +44,11 @@ class MainPage(webapp2.RequestHandler):
 class Login(webapp2.RequestHandler):
 
     def post(self):
-        movie_name = str(self.request.get('movie-id'))
-        number = int(self.request.get('number-id'))
-        timing = str(self.request.get('timing-id'))
-
+        
+        movie_name = str(self.request.get('selectedMovie'))
+        number = int(self.request.get('selectedQuantity'))
+        timing = str(self.request.get('selectedTiming'))
+        
         if (timing == 'evening'):
             movie = shows[movie_name]
             tickets_avail = movie[0] - number
@@ -61,17 +62,18 @@ class Login(webapp2.RequestHandler):
         Logon = {'movie_name': movie_name, 'number': number, 'timing': timing}
         path = os.path.join(os.path.dirname(__file__), 'SummaryPage.html')
         self.response.out.write(template.render(path, Logon))
+        
 
-class test(webapp2.RequestHandler):
+class ticketBooking(webapp2.RequestHandler):
     def get(self):
         self.response.out.headers['content-type']='text/json'
         self.response.out.write(json.dumps(shows))
 
     
 
-application = webapp2.WSGIApplication([('/', MainPage), 
-                                        ('/SummaryPage',Login),
-                                        ('/test',test)], 
+application = webapp2.WSGIApplication([('/', MainPage),
+                                        ('/ticketBooking',ticketBooking),
+                                        ('/SummaryPage',Login)],
                                         debug=True)  # ('/UserPage/',Validation)
 
 
