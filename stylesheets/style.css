@@ -1,13 +1,6 @@
 
   body  {
-            background-image: url("../stylesheets/movies.jpg");
             background-color: #cccccc;
-            
-            /* height: auto;
-            width: auto; */
-            /* color: white; */
-            background-size: cover;
-
         }
   #myDIV {
           width: 100%;

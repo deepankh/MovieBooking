@@ -57,7 +57,7 @@ class Login(webapp2.RequestHandler):
             movie = shows[movie_name]
             tickets_avail = movie[1] - number
             temp = movie[0]
-            shows[movie_name] = [tickets_avail, temp]
+            shows[movie_name] = [ temp,tickets_avail]
         Logon = {'movie_name': movie_name, 'number': number, 'timing': timing}
         path = os.path.join(os.path.dirname(__file__), 'SummaryPage.html')
         self.response.out.write(template.render(path, Logon))
