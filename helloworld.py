@@ -40,20 +40,37 @@ class MainPage (webapp2.RequestHandler):
         path = os.path.join (os.path.dirname (__file__) , 'index.html')
         self.response.out.write (template.render (path , Logon))
 
+def convert(input):
+    if isinstance(input, dict):
+        return {convert(key): convert(value) for key, value in input.iteritems()}
+    elif isinstance(input, list):
+        return [convert(element) for element in input]
+    elif isinstance(input, unicode):
+        return input.encode('utf-8')
+    else:
+        return input
 
-class Login (webapp2.RequestHandler):
+class summaryPage (webapp2.RequestHandler):
 
     def post (self):
-        upload_url_rpc = blobstore.create_upload_url_async ('/upload')
-        upload_url = upload_url_rpc.get_result ()
 
-        data=upload_url
-        print data
-        movie_name = data
+        # request = request.blank ('/')
+        # request.method = 'POST'
+        # data=json.loads(self.request.get("data"))
+        # print data
+        data = self.request.POST
+
+        # print data
+
+        for key , value in data.items():
+            data2 = json.loads(key)
+
+        print type(data2)
+        movie_name = data2['movieid']
         print(movie_name)
-        number = data[2]
+        number = int(data2["numberid"])
         print(number)
-        timing =  data[1]
+        timing =  data2["timingid"]
         print(timing)
 
         if (timing == 'evening'):
@@ -61,16 +78,16 @@ class Login (webapp2.RequestHandler):
             tickets_avail = movie[ 0 ] - number
             temp = movie[ 1 ]
             shows[ movie_name ] = [ tickets_avail , temp ]
-            return
+
         else:
             movie = shows[ movie_name ]
             tickets_avail = movie[ 1 ] - number
             temp = movie[ 0 ]
             shows[ movie_name ] = [ temp , tickets_avail ]
-            return
-        # self.response.out.headers[ 'content-type' ] = 'text/json'
-        # self.response.out.write (json.dumps (shows))
-        # return
+
+        self.response.out.headers[ 'content-type' ] = 'application/json'
+        self.response.out.write (data2)
+
 
 
 class ticketBooking (webapp2.RequestHandler):
@@ -82,7 +99,7 @@ class ticketBooking (webapp2.RequestHandler):
 
 application = webapp2.WSGIApplication ([ ('/' , MainPage) ,
                                          ('/ticketBooking' , ticketBooking) ,
-                                         ('/SummaryPage' , Login) ] ,
+                                         ('/SummaryPage' , summaryPage) ] ,
                                        debug=True)  # ('/UserPage/',Validation)
 
 

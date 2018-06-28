@@ -72,7 +72,7 @@ function booktickets(){
   var movieid = document.getElementById('movie-id').value;
   var timingid = document.getElementById('timing-id').value;
   var numberid = document.getElementById('number-id').value;
-  data={
+   var data={
     "movieid":movieid,
     "timingid":timingid,
     "numberid":numberid
@@ -97,6 +97,7 @@ function booktickets(){
   };
 
   xmlhttp.open("post", "/SummaryPage", true);
+  xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
   xmlhttp.send(JSON.stringify(data));
 }
 //function to display the image of the movie selected
@@ -106,4 +107,3 @@ function diplayImage() {
   document.getElementById('imageToBeDisplayed').src = "/stylesheets/" + movie_id + ".jpg";
 
 }
-

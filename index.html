@@ -41,7 +41,7 @@
 
 
                               <div class="col col-sm">
-                                  <select id="timing-id" class="option-box" name="timing-id" required onchange="populate()">
+                                  <select id="timing-id" class="option-box" name="timing-id" required >
                                       <option value="" selected disabled hidden>Timing</option>
                                       <option value="evening">Evening</option>
                                       <option value="night">Night</option>
@@ -94,7 +94,7 @@
           <div class="modal-body" id='secondModalBody'>
 
               <div>
-                  Movie Name : <span id="selectedMovie"></span>
+                  Movie Name : <span id="selectedMovie" name="selectedMovie"></span>
                   <br>
                   Timing : <span id="selectedTiming"></span>
               <br>
