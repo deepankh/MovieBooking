@@ -19,6 +19,7 @@ user = {'a@b.com': 'pass' , 'ddj@b.com': 'pass'}
 shows = {'102 Not Out!': [ 10 , 60 ] ,
          'Hellsing': [ 60 , 6 ] ,
          'Avengers Infinity War': [ 50 , 7 ] ,
+         'test':[5,5]
          }
 
 keys , values = shows.keys () , shows.values ()
@@ -28,17 +29,13 @@ length_keys = len (keys)
 class MainPage (webapp2.RequestHandler):
 
     def get (self):
-        if self.request.get ('format') == 'json':
-            self.response.out.headers[ 'content-type' ] = 'text/json'
-            self.response.out.write (json.dumps (shows))
-            return
 
-        Logon = {
+        movieDetails = {
             'shows': shows
         }
 
         path = os.path.join (os.path.dirname (__file__) , 'index.html')
-        self.response.out.write (template.render (path , Logon))
+        self.response.out.write (template.render (path , movieDetails))
 
 
 class summaryPage (webapp2.RequestHandler):
@@ -77,13 +74,13 @@ class ticketBooking (webapp2.RequestHandler):
     def get (self):
         self.response.out.headers[ 'content-type' ] = 'text/json'
         self.response.out.write (json.dumps (shows))
-        return
+
 
 
 application = webapp2.WSGIApplication ([ ('/' , MainPage) ,
                                          ('/ticketBooking' , ticketBooking) ,
                                          ('/SummaryPage' , summaryPage) ] ,
-                                       debug=True) 
+                                       debug=True)
 
 
 def main ():
