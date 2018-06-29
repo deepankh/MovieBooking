@@ -40,40 +40,23 @@ class MainPage (webapp2.RequestHandler):
         path = os.path.join (os.path.dirname (__file__) , 'index.html')
         self.response.out.write (template.render (path , Logon))
 
-def convert(input):
-    if isinstance(input, dict):
-        return {convert(key): convert(value) for key, value in input.iteritems()}
-    elif isinstance(input, list):
-        return [convert(element) for element in input]
-    elif isinstance(input, unicode):
-        return input.encode('utf-8')
-    else:
-        return input
 
 class summaryPage (webapp2.RequestHandler):
 
     def post (self):
 
-        # request = request.blank ('/')
-        # request.method = 'POST'
-        # data=json.loads(self.request.get("data"))
-        # print data
-        data = self.request.POST
+        data = json.loads(self.request.body)
 
-        # print data
-
-        for key , value in data.items():
-            data2 = json.loads(key)
-
-        print type(data2)
-        movie_name = data2['movieid']
+        movie_name = data["movieid"]
         print(movie_name)
-        number = int(data2["numberid"])
+
+        number = int(data["numberid"])
         print(number)
-        timing =  data2["timingid"]
+
+        timing =  data["timingid"]
         print(timing)
 
-        if (timing == 'evening'):
+        if timing == 'evening':
             movie = shows.get (movie_name)
             tickets_avail = movie[ 0 ] - number
             temp = movie[ 1 ]
@@ -86,7 +69,7 @@ class summaryPage (webapp2.RequestHandler):
             shows[ movie_name ] = [ temp , tickets_avail ]
 
         self.response.out.headers[ 'content-type' ] = 'application/json'
-        self.response.out.write (data2)
+        self.response.out.write (data)
 
 
 
@@ -100,7 +83,7 @@ class ticketBooking (webapp2.RequestHandler):
 application = webapp2.WSGIApplication ([ ('/' , MainPage) ,
                                          ('/ticketBooking' , ticketBooking) ,
                                          ('/SummaryPage' , summaryPage) ] ,
-                                       debug=True)  # ('/UserPage/',Validation)
+                                       debug=True) 
 
 
 def main ():

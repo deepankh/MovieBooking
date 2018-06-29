@@ -97,7 +97,7 @@ function booktickets(){
   };
 
   xmlhttp.open("post", "/SummaryPage", true);
-  xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+  // xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
   xmlhttp.send(JSON.stringify(data));
 }
 //function to display the image of the movie selected
